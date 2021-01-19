@@ -8,7 +8,6 @@ const cors = require('cors')
 
 // routes sources
 const indexRouter = require('./routes/index')
-const usersRouter = require('./routes/users')
 
 const app = express()
 
@@ -39,7 +38,6 @@ app.use('/images', express.static('./uploads'))
 
 // routes access
 app.use('/', indexRouter)
-app.use('/users', usersRouter)
 
 // catch 404 and forward to error handler
 app.use(function (_req, _res, next) {
