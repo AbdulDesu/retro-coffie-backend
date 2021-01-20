@@ -18,6 +18,15 @@ const {
 
   module.exports = {
     addCategory: async (req, res, _next) => {
+      req.body.ct_pic_image = req.file === undefined ? '' : req.file.filename
+  
+      const data = {
+        ...req.body,
+        ct_pic_image: req.body.ct_pic_image
+      }
+      
+      delete data.ct_pic_image
+
         try {
           const result = await addCategoryModel(req.body)
     
