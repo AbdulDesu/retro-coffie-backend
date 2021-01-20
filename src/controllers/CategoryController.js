@@ -97,6 +97,39 @@ const {
         }
       },
 
+      updateCategoryWithImage: async (req, res, _next) => {
+        const  { ct_id } = req.params
+
+        req.body.ct_pic_image = req.file === undefined ? '' : req.file.filename
+  
+        const data = {
+        ...req.body,
+        ct_pic_image: req.body.ct_pic_image
+       }
+      
+      delete data.ct_pic_image
+        
+        try {
+          const caughtData = await getCategoryByIDModel(ct_id)
+    
+          if (caughtData.length){
+            const result = await updateCategoryModel(ct_id, req.body)
+
+            if (result.affectedRows) {
+              statusUpdate(res, result)
+            } else {
+              statusNotFound(res)
+            }
+          } else {
+            statusNotFound(res)
+          }
+          
+        } catch (error) {
+          console.error(error)
+          statusServerError(res)
+        }
+      },
+
       deleteCategory: async (req, res, _next) => {
         const  { ct_id } = req.params
         
