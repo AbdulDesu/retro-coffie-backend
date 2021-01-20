@@ -18,7 +18,7 @@ module.exports = {
     })
   },
 
-  getTransaction: (csId) => {
+  getAllTransaction: (csId) => {
     return new Promise((resolve, reject) => {
       const query = `
         SELECT *
