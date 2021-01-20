@@ -65,5 +65,22 @@ module.exports = {
             }
           })
         })
-      }
+      },
+
+      deleteCategoryModel: (ctId) => {
+        return new Promise((resolve, reject) => {
+          const query = `
+          DELETE 
+          FROM category
+          WHERE ?
+          `
+          dbConnect.query(query, { ct_id : ctId }, (error, results, _fields) => {
+            if (!error) {
+              resolve(results)
+            } else {
+              reject(error)
+            }
+          })
+        })
+      },
 }

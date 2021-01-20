@@ -2,7 +2,8 @@ const {
     addCategoryModel,
     getAllCategoryModel,
     getCategoryByIDModel,
-    updateCategoryModel
+    updateCategoryModel,
+    deleteCategoryModel
   } = require('../models/CategoryModel')
 
   const {
@@ -11,7 +12,8 @@ const {
     statusCreateFail,
     statusServerError,
     statusNotFound,
-    statusUpdate
+    statusUpdate,
+    statusDelete
   } = require('../helpers/status')
 
   module.exports = {
@@ -85,4 +87,28 @@ const {
           statusServerError(res)
         }
       },
+
+      deleteCategory: async (req, res, _next) => {
+        const  { ct_id } = req.params
+        
+        try {
+          const caughtData = await getCategoryByIDModel(ct_id)
+    
+          if (caughtData.length){
+            const result = await deleteCategoryModel(ct_id)
+
+            if (result.affectedRows) {
+              statusDelete(res, result)
+            } else {
+              statusNotFound(res)
+            }
+          } else {
+            statusNotFound(res)
+          }
+          
+        } catch (error) {
+          console.error(error)
+          statusServerError(res)
+        }
+      }
   }
