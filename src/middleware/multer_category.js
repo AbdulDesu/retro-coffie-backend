@@ -6,7 +6,7 @@ const {
 
 const storage = multer.diskStorage({
   destination: (_req, _file, cb) => {
-    cb(null, './uploads/')
+    cb(null, './upload/')
   },
   filename: (_req, file, cb) => {
     const ext = file.originalname.split('.').pop()
