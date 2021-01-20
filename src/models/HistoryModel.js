@@ -1,14 +1,14 @@
 const dbConnect = require('../../config/db.config')
 
 module.exports = {
-  createOrders: (data) => {
+  createHis: (data) => {
     return new Promise((resolve, reject) => {
       const query = `
-        INSERT INTO orders
-                SET ?
-      `
-
+                INSERT INTO history
+                        SET ?
+              `
       dbConnect.query(query, data, (error, results, _fields) => {
+        console.log(results)
         if (!error) {
           resolve(results)
         } else {
@@ -17,14 +17,12 @@ module.exports = {
       })
     })
   },
-
-  getTransaction: (csId) => {
+  getHisByCsId: (csId) => {
     return new Promise((resolve, reject) => {
       const query = `
         SELECT *
-          FROM orders
+          FROM history
          WHERE ?
-      ORDER BY or_id DESC
       `
 
       dbConnect.query(query, { cs_id: csId }, (error, results, _fields) => {
