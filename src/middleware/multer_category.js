@@ -6,11 +6,11 @@ const {
 
 const storage = multer.diskStorage({
   destination: (_req, _file, cb) => {
-    cb(null, './uploads/')
+    cb(null, './upload/')
   },
   filename: (_req, file, cb) => {
     const ext = file.originalname.split('.').pop()
-    const fileName = 'img_' + Date.now() + '.' + ext
+    const fileName = 'category-pic-' + Date.now() + '.' + ext
 
     cb(null, fileName)
   }
@@ -28,14 +28,14 @@ const limits = {
   fileSize: 1024 * 1024 * 1
 }
 
-const upload = multer({ storage, fileFilter, limits }).single('image')
+const upload = multer({ storage, fileFilter, limits }).single('ct_pic_image')
 
 const uploadFilter = (req, res, next) => {
   upload(req, res, function (err) {
     if (err instanceof multer.MulterError) {
       statusError(res, err)
     } else {
-      console.log('Success upload image')
+      console.log('Success upload category picture')
     }
 
     next()

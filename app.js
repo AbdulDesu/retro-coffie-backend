@@ -8,7 +8,11 @@ const cors = require('cors')
 
 // routes sources
 const indexRouter = require('./routes/index')
-
+const cartRouter = require('./routes/cart')
+const historyRouter = require('./routes/history')
+const orderRouter = require('./routes/orders')
+const favoriteRouter = require('./routes/favorite')
+const categoryRouter = require('./routes/category')
 const app = express()
 
 // view engine setup
@@ -38,6 +42,11 @@ app.use('/images', express.static('./uploads'))
 
 // routes access
 app.use('/', indexRouter)
+app.use('/cart', cartRouter)
+app.use('/order', orderRouter)
+app.use('/history', historyRouter)
+app.use('/favorite', favoriteRouter)
+app.use('/category', categoryRouter)
 
 // catch 404 and forward to error handler
 app.use(function (_req, _res, next) {
