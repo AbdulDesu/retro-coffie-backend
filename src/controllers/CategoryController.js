@@ -22,10 +22,10 @@ const {
   
       const data = {
         ...req.body,
-        ct_pic_image: req.body.ct_pic_image
+        ct_pic_image: req.body.image
       }
       
-      delete data.ct_pic_image
+      delete data.image
 
         try {
           const result = await addCategoryModel(req.body)
@@ -104,10 +104,10 @@ const {
   
         const data = {
         ...req.body,
-        ct_pic_image: req.body.ct_pic_image
+        ct_pic_image: req.body.image
        }
       
-      delete data.ct_pic_image
+      delete data.image
         
         try {
           const caughtData = await getCategoryByIDModel(ct_id)
