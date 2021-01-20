@@ -35,7 +35,7 @@ const uploadFilter = (req, res, next) => {
     if (err instanceof multer.MulterError) {
       statusError(res, err)
     } else {
-      console.log('Success upload image')
+      console.log('Success upload category picture')
     }
 
     next()
