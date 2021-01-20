@@ -10,7 +10,7 @@ const storage = multer.diskStorage({
   },
   filename: (_req, file, cb) => {
     const ext = file.originalname.split('.').pop()
-    const fileName = 'category-' + Date.now() + '.' + ext
+    const fileName = 'product-' + Date.now() + '.' + ext
 
     cb(null, fileName)
   }
@@ -28,7 +28,7 @@ const limits = {
   fileSize: 1024 * 1024 * 1
 }
 
-const upload = multer({ storage, fileFilter, limits }).single('ct_pic_image')
+const upload = multer({ storage, fileFilter, limits }).single('pr_pic_image')
 
 const uploadFilter = (req, res, next) => {
   upload(req, res, function (err) {
