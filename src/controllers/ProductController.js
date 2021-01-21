@@ -41,19 +41,40 @@ module.exports = {
       }
     },
   
-    getAllProduct: async (req, res, _next) => {
-      try {
-        const result = await getAllProductModel()
-  
+    getAllProduct: (req, res) => {
+    let { search, limit, page } = req.query
+    let searchKey = ''
+    let searchValue = ''
+
+    if (typeof search === 'object') {
+        searchKey = Object.keys(search)[0]
+        searchValue = Object.values(search)[0]
+    } else {
+        searchKey = 'pr_name'
+        searchValue = search || ''
+    }
+
+    if (!limit) {
+        limit = 25
+    } else {
+        limit = parseInt(limit)
+    }
+
+    if (!page) {
+        page = 1
+    } else {
+        page = parseInt(page)
+    }
+
+    const offset = (page - 1) * limit
+
+    getAllProductModel(searchKey, searchValue, limit, offset, result => {
         if (result.length) {
-          statusGet(res, result)
+            statusGet(res, result)
         } else {
-          statusNotFound(res)
-        }
-      } catch (error) {
-        console.error(error)
-        statusServerError(res)
-      }
+            statusNotFound(res)
+         }
+        })
     },
   
     getProductById: async (req, res, _next) => {

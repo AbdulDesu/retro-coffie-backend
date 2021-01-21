@@ -17,18 +17,28 @@ module.exports = {
     })
   },
 
-  getAllProductModel: () => {
-    return new Promise((resolve, reject) => {
-      const query = `
-            SELECT * FROM product ORDER BY pr_id DESC
-          `
-      dbConnect.query(query, (error, results, _fields) => {
-        if (!error) {
-          resolve(results)
-        } else {
-          reject(error)
-        }
-      })
+  getAllProductModel: (searchKey, searchValue, limit, offset, callback) => {
+    dbConnect.query(`SELECT 
+    p.pr_id, 
+    ct.ct_id, 
+    ct.ct_name,
+    ct.ct_pic_image,
+    p.pr_name, 
+    p.pr_price, 
+    p.pr_desc, 
+    p.pr_status,
+    p.pr_pic_image,
+    p.pr_created_at,
+    p.pr_updated_at
+    FROM product as p
+    INNER JOIN category as ct
+    ON p.ct_id = ct.ct_id
+    WHERE ${searchKey} LIKE '%${searchValue}%' LIMIT ${limit} OFFSET ${offset}`, (err, result, fields) => {
+      if (!err) {
+        callback(result)
+      } else {
+        callback(err)
+      }
     })
   },
 
