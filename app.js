@@ -15,6 +15,7 @@ const favoriteRouter = require('./routes/favorite')
 const categoryRouter = require('./routes/category')
 const accountRouter = require('./routes/account')
 const customerRouter = require('./routes/customer')
+const productRouter = require('./routes/product')
 const app = express()
 
 // view engine setup
@@ -51,6 +52,7 @@ app.use('/favorite', favoriteRouter)
 app.use('/category', categoryRouter)
 app.use('/account', accountRouter)
 app.use('/customer', customerRouter)
+app.use('/product', productRouter)
 
 // catch 404 and forward to error handler
 app.use(function (_req, _res, next) {
