@@ -29,7 +29,6 @@ module.exports = {
   
       try {
         const result = await addProductModel(req.body)
-  
         if (result.affectedRows) {
           statusCreate(res)
         } else {
