@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 19, 2021 at 10:45 AM
+-- Generation Time: Jan 21, 2021 at 02:01 AM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.8
 
@@ -38,6 +38,13 @@ CREATE TABLE `account` (
   `ac_created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `ac_updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `account`
+--
+
+INSERT INTO `account` (`ac_id`, `ac_name`, `ac_email`, `ac_phone`, `ac_password`, `ac_level`, `ac_status`, `ac_created_at`, `ac_updated_at`) VALUES
+(1, 'Indra David', 'indradavidpesik@gmail.com', '082292192488', '123456', 1, 1, '2021-01-20 01:02:21', '2021-01-20 01:02:21');
 
 -- --------------------------------------------------------
 
@@ -89,6 +96,13 @@ CREATE TABLE `customer` (
   `cs_longitude` double DEFAULT NULL,
   `cs_pic_image` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `customer`
+--
+
+INSERT INTO `customer` (`cs_id`, `ac_id`, `cs_gender`, `cs_dob`, `cs_address`, `cs_latitude`, `cs_longitude`, `cs_pic_image`) VALUES
+(1, 1, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -173,6 +187,7 @@ CREATE TABLE `product` (
   `pr_price` bigint(12) NOT NULL,
   `pr_desc` text NOT NULL,
   `pr_status` int(11) NOT NULL DEFAULT 1,
+  `pr_pic_image` text NOT NULL,
   `pr_created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `pr_updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -253,7 +268,7 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT for table `account`
 --
 ALTER TABLE `account`
-  MODIFY `ac_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `ac_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `cart`
@@ -271,7 +286,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `cs_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `cs_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `favorite`
