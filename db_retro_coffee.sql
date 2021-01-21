@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 21, 2021 at 02:01 AM
+-- Generation Time: Jan 21, 2021 at 07:38 AM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.8
 
@@ -186,6 +186,9 @@ CREATE TABLE `product` (
   `pr_name` varchar(50) NOT NULL,
   `pr_price` bigint(12) NOT NULL,
   `pr_desc` text NOT NULL,
+  `pr_discount` int(11) NOT NULL,
+  `pr_discount_price` bigint(12) NOT NULL,
+  `pr_is_discount` int(11) NOT NULL DEFAULT 0,
   `pr_status` int(11) NOT NULL DEFAULT 1,
   `pr_pic_image` text NOT NULL,
   `pr_created_at` timestamp NOT NULL DEFAULT current_timestamp(),
