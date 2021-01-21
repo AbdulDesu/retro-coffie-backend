@@ -48,7 +48,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       const query = `
         SELECT *
-        FROM account ac
+        FROM account ac join customer cs ON (ac.ac_id = cs.ac_id)
         WHERE ?
       `
       dbConnect.query(query, { ac_email: email }, (error, results, _fields) => {

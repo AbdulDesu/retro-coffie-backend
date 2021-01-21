@@ -7,24 +7,23 @@ const {
   loginAccountModel
 } = require('../models/AccountModel')
 
-const { statusRegistration, statusRegistrationFail, statusRegistrationUnique, statusServerError } = require('../helpers/status')
+const {
+  statusRegistration,
+  statusRegistrationFail,
+  statusRegistrationUnique,
+  statusLogin,
+  statusLoginFail,
+  statusNotFoundAccount,
+  statusServerError
+} = require('../helpers/status')
 
 module.exports = {
   createAccount: async (req, res, _next) => {
-    const { acName, acEmail, acPhone, acPassword } = req.body
-    const salt = bcrypt.genSaltSync(10)
-    const encryptPassword = bcrypt.hashSync(acPassword, salt)
-
-    const setData = {
-      ac_name: acName,
-      ac_email: acEmail,
-      ac_phone: acPhone,
-      ac_password: encryptPassword
-    }
     try {
-      const findData = await getAccountByEmailModel(acEmail)
+      const findData = await getAccountByEmailModel(req.body.ac_email)
+
       if (!findData.length) {
-        const result = await createAccountModel(setData)
+        const result = await createAccountModel(req.body)
 
         if (result.affectedRows) {
           statusRegistration(res)
@@ -44,54 +43,34 @@ module.exports = {
 
       const login = await loginAccountModel(email)
 
-      if (login.length >= 1) {
+      if (login.length > 0) {
+        let peyLoad
         const cekPsw = bcrypt.compareSync(password, login[0].ac_password)
         if (cekPsw) {
-          console.log(login[0])
-          const {
-            ac_id,
-            ac_name,
-            ac_email,
-            ac_phone,
-            ac_level,
-            ac_status,
-            cs_id
-          } = login[0]
-
-          let peyLoad = {
-            ac_id,
-            ac_name,
-            ac_email,
-            ac_phone,
-            ac_level,
-            ac_status,
-            cs_id
+          peyLoad = {
+            ac_id: login[0].ac_id,
+            ac_name: login[0].ac_name,
+            ac_email: login[0].ac_email,
+            ac_phone: login[0].ac_phone,
+            ac_level: login[0].ac_level,
+            ac_status: login[0].ac_phone,
+            cs_id: login[0].cs_id
           }
           const token = jwt.sign(peyLoad, 'retrocoffee', { expiresIn: '7d' })
           peyLoad = { ...peyLoad, token }
-          res.send({
-            success: true,
-            message: 'You are login',
-            data: peyLoad
-          })
+          const result = {
+            ...peyLoad,
+            token: token
+          }
+          statusLogin(res, result)
         } else {
-          res.status(400).send({
-            success: false,
-            message: 'Email or password wrong'
-          })
+          statusLoginFail(res)
         }
       } else {
-        res.statu(402).send({
-          success: false,
-          message: 'Email or Account not register '
-        })
+        statusNotFoundAccount(res)
       }
     } catch (error) {
-      console.log(error)
-      res.status(500).send({
-        success: false,
-        message: 'internal server error'
-      })
+      statusServerError(res)
     }
   }
 }

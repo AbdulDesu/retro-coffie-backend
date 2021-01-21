@@ -18,14 +18,14 @@ const {
 
 module.exports = {
   addProduct: async (req, res, _next) => {
-    req.body.pr_pic_image = req.file === undefined ? '' : req.file.filename
+    req.body.image = req.file === undefined ? '' : req.file.filename
 
     const data = {
       ...req.body,
-      pr_pic_image: req.body.pr_pic_image
+      pr_pic_image: req.body.image
     }
 
-    delete data.pr_pic_image
+    delete data.image
 
     try {
       const result = await addProductModel(req.body)
@@ -119,20 +119,20 @@ module.exports = {
   updateProductWithImage: async (req, res, _next) => {
     const { pr_id } = req.params
 
-    req.body.pr_pic_image = req.file === undefined ? '' : req.file.filename
+    req.body.image = req.file === undefined ? '' : req.file.filename
 
     const data = {
       ...req.body,
-      pr_pic_image: req.body.pr_pic_image
+      pr_pic_image: req.body.image
     }
 
-    delete data.pr_pic_image
+    delete data.image
 
     try {
       const caughtData = await getProductByIDModel(pr_id)
 
       if (caughtData.length) {
-        const result = await updateProductModel(pr_id, req.body)
+        const result = await updateProductModel(pr_id, data)
 
         if (result.affectedRows) {
           statusUpdate(res, result)
