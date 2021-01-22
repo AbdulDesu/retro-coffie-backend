@@ -10,13 +10,13 @@ const {
   deleteProduct
 } = require('../src/controllers/ProductController')
 
-const uploadProductPic = require('../src/middleware/multer_product')
+const uploadImage = require('../src/middleware/multer')
 
 router.get('/', getAllProduct)
 router.get('/:pr_id', getProductById)
-router.post('/add/', uploadProductPic, addProduct)
+router.post('/add/', uploadImage, addProduct)
 router.put('/update/:pr_id', updateProduct)
-router.put('/update/image/:pr_id', uploadProductPic, updateProductWithImage)
+router.put('/update/image/:pr_id', uploadImage, updateProductWithImage)
 router.delete('/delete/:pr_id', deleteProduct)
 
 module.exports = router
