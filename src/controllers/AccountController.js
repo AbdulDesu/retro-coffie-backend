@@ -4,7 +4,9 @@ const jwt = require('jsonwebtoken')
 const {
   createAccountModel,
   getAccountByEmailModel,
-  loginAccountModel
+  loginAccountModel,
+  getAccountById,
+  updateAccountModel
 } = require('../models/AccountModel')
 
 const {
@@ -14,7 +16,10 @@ const {
   statusLogin,
   statusLoginFail,
   statusNotFoundAccount,
-  statusServerError
+  statusServerError,
+  statusUpdate,
+  statusUpdateFail,
+  statusNotFound
 } = require('../helpers/status')
 
 module.exports = {
@@ -70,6 +75,47 @@ module.exports = {
         statusNotFoundAccount(res)
       }
     } catch (error) {
+      statusServerError(res)
+    }
+  },
+  updateAccount: async (req, res, _next) => {
+    try {
+      const { acId } = req.params
+      const findData = await getAccountById(acId)
+
+      if (findData.length) {
+        const result = await updateAccountModel(acId, req.body)
+
+        if (result.affectedRows) {
+          statusUpdate(res)
+        } else {
+          statusUpdateFail(res)
+        }
+      } else {
+        statusNotFound(res)
+      }
+    } catch (err) {
+      statusServerError(res)
+    }
+  },
+
+  updateAccountPass: async (req, res, _next) => {
+    try {
+      const { acId } = req.params
+      const findData = await getAccountById(acId)
+
+      if (findData.length) {
+        const result = await updateAccountModel(acId, req.body)
+
+        if (result.affectedRows) {
+          statusUpdate(res)
+        } else {
+          statusUpdateFail(res)
+        }
+      } else {
+        statusNotFound(res)
+      }
+    } catch (err) {
       statusServerError(res)
     }
   }
