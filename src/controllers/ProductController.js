@@ -28,7 +28,7 @@ module.exports = {
     delete data.image
 
     try {
-      const result = await addProductModel(req.body)
+      const result = await addProductModel(data)
 
       if (result.affectedRows) {
         statusCreate(res)
@@ -125,7 +125,7 @@ module.exports = {
       ...req.body,
       pr_pic_image: req.body.image
     }
-
+    console.log(req.body)
     delete data.image
 
     try {
