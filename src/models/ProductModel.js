@@ -62,7 +62,7 @@ module.exports = {
       ON p.ct_id = ct.ct_id
       WHERE ?
       `
-      
+
       dbConnect.query(query, { pr_id: prId }, (error, results, _fields) => {
         if (!error) {
           resolve(results)
