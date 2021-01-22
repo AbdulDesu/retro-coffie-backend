@@ -4,10 +4,11 @@ const router = express.Router()
 const { createCart, getAllCartByCsId, deleteCartByCsId, updateCartByCsId } = require('../src/controllers/CartController')
 
 const uploadImage = require('../src/middleware/multer')
+const { authorization } = require('../src/middleware/auth')
 
-router.post('/', uploadImage, createCart)
-router.get('/:csId', getAllCartByCsId)
-router.delete('/:csId', deleteCartByCsId)
-router.put('/:csId', uploadImage, updateCartByCsId)
+router.post('/', authorization, uploadImage, createCart)
+router.get('/:csId', authorization, getAllCartByCsId)
+router.delete('/:csId', authorization, deleteCartByCsId)
+router.put('/:csId', authorization, uploadImage, updateCartByCsId)
 
 module.exports = router
