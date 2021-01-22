@@ -59,5 +59,40 @@ module.exports = {
         }
       })
     })
+  },
+  updateAccountModel: (acId, data) => {
+    return new Promise((resolve, reject) => {
+      const query = `
+          UPDATE 
+          account
+          SET ? 
+          WHERE ac_id = ${acId}
+          `
+      dbConnect.query(query, data, (error, results, _fields) => {
+        if (!error) {
+          resolve(results)
+        } else {
+          console.log(error)
+          reject(error)
+        }
+      })
+    })
+  },
+  getAccountById: (acId) => {
+    return new Promise((resolve, reject) => {
+      const query = `
+        SELECT *
+          FROM account
+         WHERE ?
+      `
+
+      dbConnect.query(query, { ac_id: acId }, (error, results, _fields) => {
+        if (!error) {
+          resolve(results)
+        } else {
+          reject(error)
+        }
+      })
+    })
   }
 }

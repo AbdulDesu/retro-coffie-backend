@@ -7,12 +7,12 @@ const conn = mysql.createConnection({
   database: 'db_retro_coffee'
 })
 
-/* const conn = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'db_retro_coffee'
-}) */
+// const conn = mysql.createConnection({
+//   host: 'localhost',
+//   user: 'root',
+//   password: '',
+//   database: 'db_retro_coffee'
+// })
 
 conn.connect(err => {
   if (err) {
