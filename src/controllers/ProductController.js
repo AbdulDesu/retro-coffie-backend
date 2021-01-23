@@ -2,6 +2,9 @@ const {
   addProductModel,
   getAllProductModel,
   getProductByIDModel,
+  getProductByCategoryNameModel,
+  getProductByHigherModel,
+  getProductByLowerModel,
   updateProductModel,
   deleteProductModel
 } = require('../models/ProductModel')
@@ -91,6 +94,114 @@ module.exports = {
       console.error(error)
       statusServerError(res)
     }
+  },
+
+  getProductByCategory: (req, res) => {
+    let { search, limit, page } = req.query
+    let searchKey = ''
+    let searchValue = ''
+
+    if (typeof search === 'object') {
+      searchKey = Object.keys(search)[0]
+      searchValue = Object.values(search)[0]
+    } else {
+      searchKey = 'ct_name'
+      searchValue = search || ''
+    }
+
+    if (!limit) {
+      limit = 25
+    } else {
+      limit = parseInt(limit)
+    }
+
+    if (!page) {
+      page = 1
+    } else {
+      page = parseInt(page)
+    }
+
+    const offset = (page - 1) * limit
+
+    getProductByCategoryNameModel(searchKey, searchValue, limit, offset, result => {
+      if (result.length) {
+        statusGet(res, result)
+      } else {
+        statusNotFound(res)
+      }
+    })
+  },
+
+  getProductByHigherPrice: (req, res) => {
+    let { search, limit, page } = req.query
+    let searchKey = ''
+    let searchValue = ''
+
+    if (typeof search === 'object') {
+      searchKey = Object.keys(search)[0]
+      searchValue = Object.values(search)[0]
+    } else {
+      searchKey = 'pr_name'
+      searchValue = search || ''
+    }
+
+    if (!limit) {
+      limit = 25
+    } else {
+      limit = parseInt(limit)
+    }
+
+    if (!page) {
+      page = 1
+    } else {
+      page = parseInt(page)
+    }
+
+    const offset = (page - 1) * limit
+
+    getProductByHigherModel(searchKey, searchValue, limit, offset, result => {
+      if (result.length) {
+        statusGet(res, result)
+      } else {
+        statusNotFound(res)
+      }
+    })
+  },
+
+  getProductByLowerPrice: (req, res) => {
+    let { search, limit, page } = req.query
+    let searchKey = ''
+    let searchValue = ''
+
+    if (typeof search === 'object') {
+      searchKey = Object.keys(search)[0]
+      searchValue = Object.values(search)[0]
+    } else {
+      searchKey = 'pr_name'
+      searchValue = search || ''
+    }
+
+    if (!limit) {
+      limit = 25
+    } else {
+      limit = parseInt(limit)
+    }
+
+    if (!page) {
+      page = 1
+    } else {
+      page = parseInt(page)
+    }
+
+    const offset = (page - 1) * limit
+
+    getProductByLowerModel(searchKey, searchValue, limit, offset, result => {
+      if (result.length) {
+        statusGet(res, result)
+      } else {
+        statusNotFound(res)
+      }
+    })
   },
 
   updateProduct: async (req, res, _next) => {
